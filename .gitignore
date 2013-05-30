@@ -3,3 +3,4 @@ deps/
 *.beam
 *.dump
 .eunit/
+.*.plt
