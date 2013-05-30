@@ -1,0 +1,14 @@
+{application, config_rest,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  config_backend,
+                  cowboy
+                 ]},
+  {mod, { config_rest_app, []}},
+  {env, []}
+ ]}.

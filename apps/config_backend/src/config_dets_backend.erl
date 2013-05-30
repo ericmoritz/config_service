@@ -34,7 +34,7 @@
 %% @end
 %%--------------------------------------------------------------------
 start_link(Filename) ->
-    gen_server:start_link({local, ?SERVER}, ?MODULE, [Filename], []).
+    gen_server:start_link(?MODULE, [Filename], []).
 
 %%%===================================================================
 %%% gen_server callbacks
@@ -52,7 +52,8 @@ start_link(Filename) ->
 %% @end
 %%--------------------------------------------------------------------
 init([Filename]) ->
-    {ok, Tab} = dets:open_file(Filename, [{type, bag}]),
+    {ok, Tab} = dets:open_file(Filename, [{type, set}]),
+    error_logger:info_msg("~p using ~s~n", [?MODULE, Filename]),
     {ok, #state{tab=Tab}}.
 
 
@@ -137,12 +138,12 @@ code_change(_OldVsn, State, _Extra) ->
 %%% Internal functions
 %%%===================================================================
 get_config_graph(Tab, Keys) ->
-    lists:map(
+    {ok, lists:map(
       fun(Key) ->
               get_config_node(Tab, Key)
       end,
       Keys
-     ).
+     )}.
 
 get_config_node(Tab, Key) ->
     case dets:lookup(Tab, Key) of

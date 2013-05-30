@@ -1,5 +1,5 @@
-% -*- erlang -*-
--module(config_backend_sup).
+%%% -*- erlang -*-
+-module(config_rest_sup).
 
 -behaviour(supervisor).
 
@@ -24,19 +24,5 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
-    {ok, {WorkerMod, WorkerArgs}} = config_backend:backend(),
-    {ok, SizeArgs} = config_backend:pool(),
-    {ok, PoolName} = config_backend:poolname(),
-
-    PoolArgs = [
-                {name, {local, PoolName}},
-                {worker_module, WorkerMod}
-               ] ++ SizeArgs,
-
-    PoolSpec = poolboy:child_spec(
-                 PoolName,
-                 PoolArgs,
-                 WorkerArgs
-               ),
-    {ok, { {one_for_one, 5, 10}, [PoolSpec]} }.
+    {ok, { {one_for_one, 5, 10}, []} }.
 

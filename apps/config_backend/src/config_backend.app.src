@@ -1,3 +1,4 @@
+% -*- erlang -*-
 {application, config_backend,
  [
   {description, ""},
@@ -7,6 +8,9 @@
                   kernel,
                   stdlib
                  ]},
-  {mod, { config_backend_app, []}},
-  {env, []}
+  {mod, {config_backend_app, []}},
+  {env, [
+         {backend, {config_dets_backend, ["/tmp/config_service.dets"]}},
+         {pool, [{size, 5},{max_overflow, 5}]}
+        ]}
  ]}.

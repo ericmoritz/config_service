@@ -1,0 +1,15 @@
+{application, config_service,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  cowboy,
+                  config_backend,
+                  config_rest
+                 ]},
+  {mod, { config_service_app, []}},
+  {env, []}
+ ]}.
