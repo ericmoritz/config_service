@@ -6,7 +6,7 @@
 %%% @end
 %%% Created : 29 May 2013 by Eric Moritz <eric@themoritzfamily.com>
 
--module(config_data_prototype).
+-module(config_data).
 -include_lib("eunit/include/eunit.hrl").
 
 -export([

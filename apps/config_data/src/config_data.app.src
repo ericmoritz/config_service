@@ -7,6 +7,5 @@
                   kernel,
                   stdlib
                  ]},
-  {mod, { config_data_app, []}},
   {env, []}
  ]}.
