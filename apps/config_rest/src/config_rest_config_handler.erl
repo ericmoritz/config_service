@@ -89,8 +89,8 @@ materialize_config_graph({ok, PropGraph}) ->
 
 
 flatten(PropGraph) ->
-    Data = config_data_prototype:new(PropGraph),
-    config_data_prototype:fold(
+    Data = config_data:new(PropGraph),
+    config_data:fold(
       fun(P, Accum) ->
               [P|Accum]
       end,
