@@ -6,7 +6,8 @@
   {registered, []},
   {applications, [
                   kernel,
-                  stdlib
+                  stdlib,
+                  apptools
                  ]},
   {mod, {config_backend_app, []}},
   {env, [

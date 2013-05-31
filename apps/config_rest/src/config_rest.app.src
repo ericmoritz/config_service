@@ -6,7 +6,10 @@
   {applications, [
                   kernel,
                   stdlib,
+                  config_data,
                   config_backend,
+                  jiffy,
+                  apptools,
                   cowboy
                  ]},
   {mod, { config_rest_app, []}},
