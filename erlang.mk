@@ -1,8 +1,9 @@
 PLT_APPS ?=
-DIALYZER_OPTS ?= -Werror_handling -Wrace_conditions \
--Wunmatched_returns # -Wunderspecs
 SRC ?= src
 EBIN ?= ebin deps/*/ebin
+DIALYZER_OPTS ?= \
+	-Werror_handling\
+	-Wunmatched_returns
 
 all: compile
 
@@ -27,6 +28,6 @@ build-plt:
 	@dialyzer --build_plt --output_plt .$(PROJECT).plt \
 	    --apps erts kernel stdlib $(PLT_APPS)
 
-dialyze:
+dialyze: get-deps
 	@dialyzer --src $(SRC) \
-	    --plt .$(PROJECT).plt --no_native $(DIALYZER_OPTS)
+	    --plt .$(PROJECT).plt $(DIALYZER_OPTS)
