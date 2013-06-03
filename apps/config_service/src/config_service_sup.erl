@@ -11,7 +11,7 @@
 -behaviour(supervisor).
 
 %% API
--export([start_link/1]).
+-export([start_link/1, start_link/2]).
 
 %% Supervisor callbacks
 -export([init/1]).
@@ -22,9 +22,11 @@
 %% ===================================================================
 %% API functions
 %% ===================================================================
-
 start_link(HTTPPort) ->
-    Ret = supervisor:start_link({local, ?MODULE}, ?MODULE, [HTTPPort]),
+    start_link(HTTPPort, 100).
+
+start_link(HTTPPort, Acceptors) ->
+    Ret = supervisor:start_link({local, ?MODULE}, ?MODULE, [HTTPPort, Acceptors]),
     error_logger:info_msg("Cowboy listening on ~w~n", [HTTPPort]),
     Ret.
 
@@ -32,16 +34,16 @@ start_link(HTTPPort) ->
 %% Supervisor callbacks
 %% ===================================================================
 
-init([HTTPPort]) ->
-    CowboySpec = cowboy_spec(HTTPPort),
+init([HTTPPort, Acceptors]) ->
+    CowboySpec = cowboy_spec(HTTPPort, Acceptors),
     {ok, { {one_for_one, 5, 10}, [CowboySpec]} }.
 
-cowboy_spec(HTTPPort) ->
+cowboy_spec(HTTPPort, Acceptors) ->
     Dispatch = cowboy_router:compile(
                  config_rest_urls:dispatch()
                ),
     ranch:child_spec(
-      config_service, 100,
+      config_service, Acceptors,
       ranch_tcp, [{port, HTTPPort}],
       cowboy_protocol, [{env, [{dispatch, Dispatch}]}]
      ).
