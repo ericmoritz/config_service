@@ -23,7 +23,10 @@ test:
 	rebar eunit skip_deps=true
 
 rel: compile
-	./relx
+	rebar generate
+
+relclean:
+	rm -rf rel/$(PROJECT)
 
 # Dialyzer.
 
