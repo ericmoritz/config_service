@@ -22,6 +22,9 @@ shell: compile
 test:
 	rebar eunit skip_deps=true
 
+rel: compile
+	./relx
+
 # Dialyzer.
 
 build-plt:

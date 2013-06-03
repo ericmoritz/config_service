@@ -4,3 +4,4 @@ deps/
 *.dump
 .eunit/
 .*.plt
+rel/config_service
