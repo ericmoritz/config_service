@@ -38,10 +38,8 @@ init([HTTPPort]) ->
 
 cowboy_spec(HTTPPort) ->
     Dispatch = cowboy_router:compile(
-                 quickdraw:dispatch([
-                                     config_rest_urls
-                                    ])
-                ),
+                 config_rest_urls:dispatch()
+               ),
     ranch:child_spec(
       config_service, 100,
       ranch_tcp, [{port, HTTPPort}],
