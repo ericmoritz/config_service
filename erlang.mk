@@ -4,16 +4,17 @@ EBIN ?= ebin deps/*/ebin
 DIALYZER_OPTS ?= \
 	-Werror_handling\
 	-Wunmatched_returns
+REBAR ?= ./rebar
 
 .PHONY: all compile deps demo-shell shell test rel relclean pltclean dialyze
 
 all: compile
 
 compile: deps
-	rebar compile
+	$(REBAR) compile
 
 deps:
-	rebar get-deps
+	$(REBAR) get-deps
 
 demo-shell: compile
 	erl -pa $(EBIN) -s $(PROJECT)
@@ -22,10 +23,10 @@ shell: compile
 	erl -pa $(EBIN)
 
 test:
-	rebar eunit skip_deps=true
+	$(REBAR) eunit skip_deps=true
 
 rel: compile
-	rebar generate
+	$(REBAR) generate
 
 relclean:
 	rm -rf rel/$(PROJECT)
