@@ -5,12 +5,14 @@ DIALYZER_OPTS ?= \
 	-Werror_handling\
 	-Wunmatched_returns
 
+.PHONY: all compile deps demo-shell shell test rel relclean pltclean dialyze
+
 all: compile
 
 compile: get-deps
 	rebar compile
 
-get-deps:
+deps:
 	rebar get-deps
 
 demo-shell: compile
@@ -30,10 +32,13 @@ relclean:
 
 # Dialyzer.
 
-build-plt:
+.$(PROJECT).plt:
 	@dialyzer --build_plt --output_plt .$(PROJECT).plt \
 	    --apps erts kernel stdlib $(PLT_APPS)
 
-dialyze: get-deps
+dialyze: .$(PROJECT).plt
 	@dialyzer --src $(SRC) \
 	    --plt .$(PROJECT).plt $(DIALYZER_OPTS)
+
+pltclean:
+	rm .$(PROJECT).plt
