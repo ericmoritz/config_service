@@ -9,7 +9,7 @@ DIALYZER_OPTS ?= \
 
 all: compile
 
-compile: get-deps
+compile: deps
 	rebar compile
 
 deps:
